@@ -16,6 +16,33 @@ Foi escolhido o Terraform para criar recursos em ambas as provedoras.
 
 A escolha foi devido ao state do terraform para aplicar somente quando for necessário, na facilidade de criar e destruir recursos em dois simples comandos.
 
+# Infraestrutura de rede
+
+Como o intuito é de testar o Terraform em duas Clouds, foi decidido que as instâncias seriam lançadas sobre subnets públicas, e as interfaces de rede envelopadas por security group para expor somente as portas dos serviços.
+
+Portanto, é importante saber que as instâncias serão expostas à Internet.
+
+# Instalação dos aplicativos
+
+Nós iremos subir três instâncias cada qual irá executar um script de inicialização do serviço.
+
+Temos os seguintes scripts para instalação:
+
+1. rundeck (Server 1)
+2. php + apache + mysql (LAMP) (Server 2)
+3. jenkins (Server 3)
+
+Cada script será inserido como _Custom Data_ das máquinas virtuais para instalar todas as dependências e inicialização dos serviços automaticamente.
+
+Os scripts podem ser conferidos em `./user-datas`.
+
+# Sistema operacional das máquinas
+
+Para as instâncias da AWS, seleciono a `Amazon Linux 2`. Já para a única instância da Azure, vamos de `CentOs 7`
+
+# Chave das máquinas
+
+A chave RSA é gerada dinamicamente durante a aplicação e a sua chave pública é repassada às instâncias, enquanto que a chave privada poderá ser baixada por um comando do Terraform, após o sucesso do comando de `apply`.
 
 # Como executar o projeto
 
